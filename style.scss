@@ -1,3 +1,12 @@
+// Mixin
+@mixin center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+// Styles
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   background-color: #0a081c;
@@ -12,28 +21,13 @@ body {
   overflow: hidden;
 }
 
-@mixin center {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-
-.container {
-  @include center;
-  z-index: 100;
-}
-
-.center {
-  @include center;
-}
-
 #earth {
   position: relative;
   height: 200px;
   width: 200px;
-  background: blue;
-  border-radius: 100%;
+  background: url('https://cdn.pixellini.com/astronauts/earth.png');
+  background-repeat: no-repeat;
+  background-size: cover;
   z-index: 100;
 }
 
@@ -66,18 +60,55 @@ body {
 
 .astronaut {
   height: 20px;
-  width: 20px;
+  width: 10px;
   border-radius: 100%;
   background: white;
+  z-index: 2000;
+  padding: 10px;
+  animation-name: rotate;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-direction: reverse;
 
   &-container {
     @include center;
-    height: 300px;
-    width: 300px;
     z-index: 200;
+    animation-name: rotate;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+  }
+
+  &-details {
+    position: absolute;
+    background: white;
+    width: auto;
+    visibility: visible;
+    transition: all 0.5s ease;
+    animation-name: rotate;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-direction: reverse;
+    z-index: 3000;
   }
 }
 
+// UTILS
+.container {
+  @include center;
+  z-index: 100;
+}
+
+.center {
+  @include center;
+}
+
+.hidden {
+  visibility: hidden;
+  opacity: 0;
+  transition: all 0.5s ease;
+}
+
+// ANIMATIONS
 @keyframes rotate {
   from {
     transform: translate(-50%, -50%) rotate(0deg);

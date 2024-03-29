@@ -68,16 +68,17 @@ function setAstronautHoverEvent () {
 async function init () {
     const astronauts = await fetchAstronauts()
 
-    const appEl = document.getElementById('app')
+    const astronautContainerEl = document.getElementById('astronauts')
     astronauts.forEach(astronaut => {
         const { name, craft } = astronaut
         if (name && craft) {
-            appEl.innerHTML += generateAstronautElement(name, craft)
+            astronautContainerEl.innerHTML += generateAstronautElement(name, craft)
         }
     })
 
+    const starsContainerEl = document.getElementById('stars')
     for (let i = 0; i < NUM_OF_STARS; i++) {
-        appEl.innerHTML += generateStar()
+        starsContainerEl.innerHTML += generateStar()
     }
 
     setAstronautHoverEvent()

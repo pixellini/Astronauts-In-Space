@@ -1,3 +1,6 @@
+$earth_asset: 'https://cdn.pixellini.com/astronauts/earth.png';
+$astronaut_asset: 'https://cdn.pixellini.com/astronauts/astronaut.png';
+
 // Mixin
 @mixin center {
   position: absolute;
@@ -25,7 +28,7 @@ body {
   position: relative;
   height: 200px;
   width: 200px;
-  background: url('https://cdn.pixellini.com/astronauts/earth.png');
+  background: url($earth_asset);
   background-repeat: no-repeat;
   background-size: cover;
   z-index: 100;
@@ -34,7 +37,7 @@ body {
 .star {
   position: absolute;
   opacity: 0.8;
-  z-index: 1;
+  z-index: -1;
 
   &:before,
   &:after {
@@ -44,25 +47,33 @@ body {
     left: 50px;
     transform: translate(-50%, -50%);
     background: white;
-    z-index: 1;
+    z-index: -1;
   }
 
+  $length: 7px;
+  $width: 1px;
   &:before {
-    height: 10px;
-    width: 2px;
+    height: $length;
+    width: $width;
   }
   
   &:after {
-    height: 2px;
-    width: 10px;
+    height: $width;
+    width: $length;
   }
 }
 
 .astronaut {
-  height: 20px;
-  width: 10px;
-  border-radius: 100%;
-  background: white;
+  $size: 40px;
+
+  height: $size;
+  width: $size;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: url($astronaut_asset);
+  background-repeat: no-repeat;
+  background-size: contain;
   z-index: 2000;
   padding: 10px;
   animation-name: rotate;
@@ -72,7 +83,7 @@ body {
 
   &-container {
     @include center;
-    z-index: 200;
+    z-index: 2000;
     animation-name: rotate;
     animation-timing-function: linear;
     animation-iteration-count: infinite;

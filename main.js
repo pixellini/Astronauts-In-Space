@@ -1,9 +1,11 @@
 import './style.scss'
 import axios from 'axios'
 
-const MIN_ORBIT_SPEED = 30
-const MAX_ORBIT_SPEED = 60
-const NUM_OF_STARS = 250
+const MIN_ORBIT_SPEED = 100
+const MAX_ORBIT_SPEED = 200
+const STAR_COUNT = 500
+const STAR_SIZES = ['medium', 'large'] // small is default
+const STAR_COLORS = ['yellow', 'blue'] // white is default
 const ASTRONAUT_ORBIT_MIN = 250
 const ASTRONAUT_ORBIT_MAX = 500 
 const ASTRONAUT_API_ENDPOINT = 'https://c6pp1xpxw9.execute-api.ap-southeast-2.amazonaws.com/'
@@ -46,8 +48,14 @@ function generateAstronautElement (name, craft) {
 function generateStar () {
     const posX = getRandomNumber(0, 100)
     const posY = getRandomNumber(0, 100)
+    const starSize = STAR_SIZES[getRandomNumber(1, 3) - 1] || ''
+    const starColor = STAR_COLORS[getRandomNumber(1, 3) - 1] || ''
+    const animationDuration = getRandomNumber(2,10)
+    const animationDelay = getRandomNumber(0, 10)
+    const rotation = getRandomNumber(0, 360)
+
     return `
-        <div class="star" style="top: ${posY}%; left: ${posX}%"></div>
+        <div class="star ${starSize} ${starColor}" style="top: ${posY}%; left: ${posX}%; animation-duration: ${animationDuration}s; animation-delay: ${animationDelay}s; transform: rotate(${rotation}deg);"></div>
     `
 }
 
@@ -77,7 +85,7 @@ async function init () {
     })
 
     const starsContainerEl = document.getElementById('stars')
-    for (let i = 0; i < NUM_OF_STARS; i++) {
+    for (let i = 0; i < STAR_COUNT; i++) {
         starsContainerEl.innerHTML += generateStar()
     }
 

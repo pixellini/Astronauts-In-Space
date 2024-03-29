@@ -38,9 +38,14 @@ body {
   z-index: 1;
 
   .star {
+    --star-color: white;
+
     position: absolute;
     opacity: 0.8;
     z-index: -2;
+    animation-name: twinkle;
+    animation-timing-function: ease;
+    animation-iteration-count: infinite;
   
     &:before,
     &:after {
@@ -49,19 +54,37 @@ body {
       top: 50%;
       left: 50px;
       transform: translate(-50%, -50%);
-      background: white;
+      background: var(--star-color);
     }
   
-    $length: 7px;
-    $width: 1px;
+    // Sizes
+    --star-length: 1px;
+    // --star-width: 3px;
     &:before {
-      height: $length;
-      width: $width;
+      height: var(--star-length);
+      width: var(--star-length);
     }
     
     &:after {
-      height: $width;
-      width: $length;
+      height: var(--star-length);
+      width: var(--star-length);
+    }
+
+    &.medium {
+      --star-length: 2px;
+    }
+
+    &.large {
+      --star-length: 3px;
+    }
+
+    // Colors
+    &.yellow {
+      --star-color: #fcf1a9;
+    }
+
+    &.blue {
+      --star-color: #a2c6f9;
     }
   }
 }
@@ -129,5 +152,14 @@ body {
   }
   to {
     transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+@keyframes twinkle {
+  0%, 30%, 70%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
   }
 }

@@ -36,6 +36,9 @@ export async function astronaut (event: APIGatewayProxyEvent): Promise<APIGatewa
 
     return {
         statusCode,
+        headers: {
+            'Access-Control-Allow-Origin': '*',
+        },
         body: JSON.stringify(body)
     }
 }

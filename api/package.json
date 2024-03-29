@@ -7,7 +7,7 @@
   },
   "scripts": {
     "dev": "sls invoke local -f astronaut",
-    "deploy": "sls deploy"
+    "deploy": "sls deploy --stage production"
   },
   "devDependencies": {
     "@types/aws-lambda": "^8.10.101",

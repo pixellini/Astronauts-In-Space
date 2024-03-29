@@ -1,55 +1,18 @@
 import './style.scss'
 import axios from 'axios'
 
-const MIN_ORBIT_SPEED = 3
-const MAX_ORBIT_SPEED = 3
+const MIN_ORBIT_SPEED = 30
+const MAX_ORBIT_SPEED = 60
 const NUM_OF_STARS = 250
 const ASTRONAUT_ORBIT_MIN = 250
 const ASTRONAUT_ORBIT_MAX = 500 
-const SAMPLE_DATA = {
-    "message": "success",
-    "people": [
-        {
-            "name": "Jasmin Moghbeli",
-            "craft": "ISS"
-        },
-        {
-            "name": "Andreas Mogensen",
-            "craft": "ISS"
-        },
-        {
-            "name": "Satoshi Furukawa",
-            "craft": "ISS"
-        },
-        {
-            "name": "Konstantin Borisov",
-            "craft": "ISS"
-        },
-        {
-            "name": "Oleg Kononenko",
-            "craft": "ISS"
-        },
-        {
-            "name": "Nikolai Chub",
-            "craft": "ISS"
-        },
-        {
-            "name": "Loral O'Hara",
-            "craft": "ISS"
-        }
-    ],
-    "number": 7
-}
+const ASTRONAUT_API_ENDPOINT = 'https://c6pp1xpxw9.execute-api.ap-southeast-2.amazonaws.com/'
 
 export async function fetchAstronauts () {
     try {
-        // console.log('fetching astronauts...')
-        // const result = await axios.get('http://api.open-notify.org/astros.json', {
-        //     headers: {
-        //         'Access-Control-Allow-Origin': '*'
-        //     }
-        // })
-        return SAMPLE_DATA
+        console.log('fetching astronauts...')
+        const result = await axios.get(ASTRONAUT_API_ENDPOINT)
+        return result.data
     }
     catch(error) {
         // TODO: Handle error
@@ -106,7 +69,7 @@ async function init () {
     const astronauts = await fetchAstronauts()
 
     const appEl = document.getElementById('app')
-    astronauts.people.forEach(astronaut => {
+    astronauts.forEach(astronaut => {
         const { name, craft } = astronaut
         if (name && craft) {
             appEl.innerHTML += generateAstronautElement(name, craft)

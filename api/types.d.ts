@@ -4,9 +4,7 @@ export interface Astronaut {
 }
 
 export interface AstronautApiResponse {
-    data: {
-        message: string
-        people: Astronaut[]
-        number: number
-    }
+    message: string
+    people: Astronaut[]
+    number: number
 }

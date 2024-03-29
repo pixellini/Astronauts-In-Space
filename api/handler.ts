@@ -1,5 +1,4 @@
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda'
-import axios from 'axios'
 import type { Astronaut, AstronautApiResponse } from './types'
 
 const ASTROS_ENDPOINT = 'http://api.open-notify.org/astros.json'
@@ -15,15 +14,14 @@ enum Status {
 
 export async function astronaut (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> {
     let statusCode = Status.Success
-    let body = {}
+    let body: Astronaut[] = []
 
     try {
-        const result: AstronautApiResponse = await axios.get(ASTROS_ENDPOINT)
-        
-        if (result.data.message === MessageResult.Success) {
-            const astronauts: Astronaut[] = result.data.people || []
-    
-            body = astronauts
+        const result = await fetch(ASTROS_ENDPOINT)
+        const data: AstronautApiResponse = await result.json()
+
+        if (data.message === MessageResult.Success) {
+            body = data.people || []
         }
         else {
             //TODO: Throw exception

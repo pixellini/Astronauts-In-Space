@@ -2,9 +2,6 @@
   "name": "astronaut-api",
   "description": "This template demonstrates how to make a simple HTTP API with Node.js and Typescript running on AWS Lambda and API Gateway using the Serverless Framework v3",
   "version": "1.0.0",
-  "dependencies": {
-    "axios": "^1.6.8"
-  },
   "scripts": {
     "dev": "sls invoke local -f astronaut",
     "deploy": "sls deploy --stage production"

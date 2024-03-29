@@ -22,6 +22,12 @@ $astronaut_asset: 'https://cdn.pixellini.com/astronauts/astronaut.png';
 
 body {
   overflow: hidden;
+  transition: all 1s ease;
+}
+
+.loading {
+  opacity: 0;
+  transition: all 0s ease;
 }
 
 #earth {
@@ -106,13 +112,14 @@ body {
   animation-timing-function: linear;
   animation-iteration-count: infinite;
   animation-direction: reverse;
-
+  
   &-container {
     @include center;
     z-index: 9999;
     animation-name: rotate;
     animation-timing-function: linear;
     animation-iteration-count: infinite;
+    transition: opacity 1s ease;
   }
 
   &-details {

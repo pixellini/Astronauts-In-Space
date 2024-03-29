@@ -1,5 +1,4 @@
 import './style.scss'
-import axios from 'axios'
 
 const MIN_ORBIT_SPEED = 100
 const MAX_ORBIT_SPEED = 200
@@ -12,9 +11,8 @@ const ASTRONAUT_API_ENDPOINT = 'https://c6pp1xpxw9.execute-api.ap-southeast-2.am
 
 export async function fetchAstronauts () {
     try {
-        console.log('fetching astronauts...')
-        const result = await axios.get(ASTRONAUT_API_ENDPOINT)
-        return result.data
+        const result = await fetch(ASTRONAUT_API_ENDPOINT)
+        return result.json() || []
     }
     catch(error) {
         // TODO: Handle error
@@ -33,7 +31,7 @@ function generateAstronautElement (name, craft) {
 
     return `
         <div class="center" style="transform: rotate(${pos})">
-            <div class="astronaut-container" style="width: ${size}; height: ${size}; animation-duration: ${speed};">
+            <div class="astronaut-container loading" style="width: ${size}; height: ${size}; animation-duration: ${speed};">
                 <div style="transform: rotate(-${pos})">
                     <div class="astronaut" style="animation-duration: ${speed}"></div>
                     <div class="astronaut-details hidden" style="animation-duration: ${speed}">
@@ -92,4 +90,22 @@ async function init () {
     setAstronautHoverEvent()
 }
 
-init()
+document.addEventListener("DOMContentLoaded", async () => {
+    await init()
+    
+    // This timeout allows for the transition to proceed after everything has loaded.
+    const appEl = document.querySelector('body')
+    setTimeout(() => {
+        appEl.classList.remove('loading')
+    }, 0)
+    
+    setTimeout(() => {
+        console.log('hit')
+        const astronautEls = document.querySelectorAll('.astronaut-container')
+        astronautEls.forEach((astronaut, index) => {
+            setTimeout(() => {
+                astronaut.classList.remove('loading')
+            }, index * 250)
+        })
+    }, 500)
+});

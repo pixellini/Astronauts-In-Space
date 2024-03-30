@@ -109,8 +109,9 @@ body {
   background: url($astronaut_asset);
   background-repeat: no-repeat;
   background-size: contain;
-  z-index: 9999;
+  z-index: 5000;
   padding: 10px;
+  pointer-events: all;
   animation-name: rotate;
   animation-timing-function: linear;
   animation-iteration-count: infinite;
@@ -118,7 +119,7 @@ body {
   
   &-container {
     @include center;
-    z-index: 5000;
+    z-index: 4000;
     animation-name: rotate;
     animation-timing-function: linear;
     animation-iteration-count: infinite;
@@ -134,8 +135,7 @@ body {
     width: auto;
     visibility: visible;
     transition: all 0.5s ease;
-    z-index: 5000;
-    pointer-events: none;
+    z-index: 9999;
     animation-name: rotate;
     animation-timing-function: linear;
     animation-iteration-count: infinite;

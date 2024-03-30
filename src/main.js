@@ -1,4 +1,4 @@
-import './style.scss'
+import './main.scss'
 
 const MIN_ORBIT_SPEED = 50
 const MAX_ORBIT_SPEED = 200

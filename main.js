@@ -1,11 +1,11 @@
 import './style.scss'
 
-const MIN_ORBIT_SPEED = 100
+const MIN_ORBIT_SPEED = 50
 const MAX_ORBIT_SPEED = 200
 const STAR_COUNT = 500
 const STAR_SIZES = ['medium', 'large'] // small is default
 const STAR_COLORS = ['yellow', 'blue'] // white is default
-const ASTRONAUT_ORBIT_MIN = 250
+const ASTRONAUT_ORBIT_MIN = 200
 const ASTRONAUT_ORBIT_MAX = 500 
 const ASTRONAUT_API_ENDPOINT = 'https://c6pp1xpxw9.execute-api.ap-southeast-2.amazonaws.com/'
 
@@ -27,14 +27,18 @@ function getRandomNumber (min, max) {
 function generateAstronautElement (name, craft) {
     const size = getRandomNumber(ASTRONAUT_ORBIT_MIN, ASTRONAUT_ORBIT_MAX) + 'px'
     const speed = getRandomNumber(MIN_ORBIT_SPEED, MAX_ORBIT_SPEED) + 's'
-    const pos = getRandomNumber(0, 360) + 'deg'
+    const orbitPos = getRandomNumber(0, 360) + 'deg'
+    const astronautPosX = (getRandomNumber(0, 1) * 100) + '%'
+    const astronautPosY = (getRandomNumber(0, 100)) + '%'
+    const namePosX = `calc(${astronautPosX} - 40px)`
+    const namePosY = `calc(${astronautPosY} - 40px)`
 
     return `
-        <div class="center" style="transform: rotate(${pos})">
+        <div class="center" style="transform: rotate(${orbitPos})">
             <div class="astronaut-container loading" style="width: ${size}; height: ${size}; animation-duration: ${speed};">
-                <div style="transform: rotate(-${pos})">
-                    <div class="astronaut" style="animation-duration: ${speed}"></div>
-                    <div class="astronaut-details hidden" style="animation-duration: ${speed}">
+                <div style="width: ${size}; height: ${size}; transform: rotate(-${orbitPos})">
+                    <div class="astronaut" style="animation-duration: ${speed}; top: ${astronautPosY}; left: ${astronautPosX}"></div>
+                    <div class="astronaut-details hidden" style="animation-duration: ${speed}; top: ${namePosY}; left: ${namePosX}"">
                         <span>${name}</span>
                     </div>
                 </div>
@@ -60,15 +64,15 @@ function generateStar () {
 function setAstronautHoverEvent () {
     const astronautEls = document.querySelectorAll('.astronaut')
     const astronautDetailEls = document.querySelectorAll('.astronaut-details')
-    // astronautEls.forEach((astronaut, index) => {
-    //   astronaut.addEventListener('mouseenter', () => {
-    //     astronautDetailEls[index].classList.remove('hidden')
-    //   })
+    astronautEls.forEach((astronaut, index) => {
+        astronaut.addEventListener('mouseover', () => {
+            astronautDetailEls[index].classList.remove('hidden')
+        })
 
-    //   astronaut.addEventListener('mouseleave', () => {
-    //     astronautDetailEls[index].classList.add('hidden')
-    //   })
-    // })
+        astronaut.addEventListener('mouseleave', () => {
+            astronautDetailEls[index].classList.add('hidden')
+        })
+    })
 }
 
 async function init () {
@@ -100,12 +104,11 @@ document.addEventListener("DOMContentLoaded", async () => {
     }, 0)
     
     setTimeout(() => {
-        console.log('hit')
         const astronautEls = document.querySelectorAll('.astronaut-container')
         astronautEls.forEach((astronaut, index) => {
             setTimeout(() => {
                 astronaut.classList.remove('loading')
-            }, index * 250)
+            }, index * 100)
         })
     }, 500)
 });

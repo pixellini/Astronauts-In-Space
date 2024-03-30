@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap');
+
 $earth_asset: 'https://cdn.pixellini.com/astronauts/earth.png';
 $astronaut_asset: 'https://cdn.pixellini.com/astronauts/astronaut.png';
 
@@ -23,6 +25,7 @@ $astronaut_asset: 'https://cdn.pixellini.com/astronauts/astronaut.png';
 body {
   overflow: hidden;
   transition: all 1s ease;
+  font-family: "Pixelify Sans", sans-serif;
 }
 
 .loading {
@@ -101,8 +104,8 @@ body {
   height: $size;
   width: $size;
   position: absolute;
-  top: 0;
-  left: 0;
+  top: calc($size / 2);
+  left: calc($size / 2);
   background: url($astronaut_asset);
   background-repeat: no-repeat;
   background-size: contain;
@@ -115,24 +118,28 @@ body {
   
   &-container {
     @include center;
-    z-index: 9999;
+    z-index: 5000;
     animation-name: rotate;
     animation-timing-function: linear;
     animation-iteration-count: infinite;
     transition: opacity 1s ease;
+    pointer-events: none;
   }
 
   &-details {
     position: absolute;
     background: white;
+    padding: 5px 10px;
+    border: 2px solid #6c738c;
     width: auto;
     visibility: visible;
     transition: all 0.5s ease;
+    z-index: 5000;
+    pointer-events: none;
     animation-name: rotate;
     animation-timing-function: linear;
     animation-iteration-count: infinite;
     animation-direction: reverse;
-    z-index: 9999;
   }
 }
 
